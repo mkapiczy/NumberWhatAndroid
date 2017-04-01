@@ -1,10 +1,9 @@
 package numberwhat.com.numberwhat.utils;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 
 import numberwhat.com.numberwhat.R;
 
@@ -14,7 +13,7 @@ import numberwhat.com.numberwhat.R;
 
 public class StyleUtils {
 
-    public static Paint getDialBackgroundPaint(Context ctx){
+    public static Paint getDialBackgroundPaint(Context ctx) {
         Paint p = new Paint();
         p.setAntiAlias(true);
         p.setColor(ContextCompat.getColor(ctx, R.color.colorDial));
@@ -22,7 +21,7 @@ public class StyleUtils {
         return p;
     }
 
-    public static Paint getMinuteBoardPaint(Context ctx){
+    public static Paint getMinuteBoardPaint(Context ctx) {
         Paint p = new Paint();
         p.setAntiAlias(true);
         p.setColor(ContextCompat.getColor(ctx, R.color.colorMinuteBoard));
@@ -30,9 +29,11 @@ public class StyleUtils {
         return p;
     }
 
-    public static Paint getHourTextPaint(Context ctx){
+    public static Paint getHourTextPaint(Context ctx) {
         Paint p = new Paint();
         p.setAntiAlias(true);
+        p.setTextSize(30);
+        p.setTypeface(Typeface.DEFAULT_BOLD);
         p.setColor(ContextCompat.getColor(ctx, R.color.colorHourText));
         p.setStyle(Paint.Style.FILL);
         return p;
