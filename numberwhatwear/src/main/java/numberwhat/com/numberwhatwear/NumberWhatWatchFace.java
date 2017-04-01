@@ -16,7 +16,9 @@
 
 package numberwhat.com.numberwhatwear;
 
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -28,6 +30,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -355,92 +358,36 @@ public class NumberWhatWatchFace extends CanvasWatchFaceService {
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
 
-            if (mAmbient && (mLowBitAmbient || mBurnInProtection)) {
-                canvas.drawColor(Color.BLACK);
-            } else if (mAmbient) {
-                canvas.drawBitmap(mGrayBackgroundBitmap, 0, 0, mBackgroundPaint);
+            int canvasWidth = canvas.getWidth();
+            int canvasHeight = canvas.getHeight();
+
+            canvas.drawCircle(canvasWidth / 2, canvasHeight / 2, canvasWidth / 2,
+                    StyleUtils.getDialBackgroundPaint(getApplicationContext()));
+
+            int minutes = DateUtils.getCurrentMinutes();
+            int hour = DateUtils.getCurrentHour();
+            int minutesInDegrees = 6 * minutes;
+
+            canvas.drawArc(new RectF(0, 0, canvasWidth, canvasHeight), -90, minutesInDegrees, true,
+                    StyleUtils.getMinuteBoardPaint(getApplicationContext()));
+            int hourMargin = canvasWidth / 15;
+            int hourXPosition;
+
+            if (minutes < 30) {
+                hourXPosition = canvasWidth / 2 + hourMargin;
             } else {
-                canvas.drawBitmap(mBackgroundBitmap, 0, 0, mBackgroundPaint);
+                hourXPosition = canvasWidth / 2 - hourMargin;
+                if (hour == 12) {
+                    hour = 1;
+                } else {
+                    hour = hour + 1;
+                }
             }
 
-            /*
-             * Draw ticks. Usually you will want to bake this directly into the photo, but in
-             * cases where you want to allow users to select their own photos, this dynamically
-             * creates them on top of the photo.
-             */
-            float innerTickRadius = mCenterX - 10;
-            float outerTickRadius = mCenterX;
-            for (int tickIndex = 0; tickIndex < 12; tickIndex++) {
-                float tickRot = (float) (tickIndex * Math.PI * 2 / 12);
-                float innerX = (float) Math.sin(tickRot) * innerTickRadius;
-                float innerY = (float) -Math.cos(tickRot) * innerTickRadius;
-                float outerX = (float) Math.sin(tickRot) * outerTickRadius;
-                float outerY = (float) -Math.cos(tickRot) * outerTickRadius;
-                canvas.drawLine(mCenterX + innerX, mCenterY + innerY,
-                        mCenterX + outerX, mCenterY + outerY, mTickAndCirclePaint);
-            }
+            int hourYPosition = canvasHeight / 4 - canvasHeight / 8;
 
-            /*
-             * These calculations reflect the rotation in degrees per unit of time, e.g.,
-             * 360 / 60 = 6 and 360 / 12 = 30.
-             */
-            final float seconds =
-                    (mCalendar.get(Calendar.SECOND) + mCalendar.get(Calendar.MILLISECOND) / 1000f);
-            final float secondsRotation = seconds * 6f;
+            canvas.drawText(Integer.toString(hour), hourXPosition, hourYPosition, StyleUtils.getHourTextPaint(getApplicationContext()));
 
-            final float minutesRotation = mCalendar.get(Calendar.MINUTE) * 6f;
-
-            final float hourHandOffset = mCalendar.get(Calendar.MINUTE) / 2f;
-            final float hoursRotation = (mCalendar.get(Calendar.HOUR) * 30) + hourHandOffset;
-
-            /*
-             * Save the canvas state before we can begin to rotate it.
-             */
-            canvas.save();
-
-            canvas.rotate(hoursRotation, mCenterX, mCenterY);
-            canvas.drawLine(
-                    mCenterX,
-                    mCenterY - CENTER_GAP_AND_CIRCLE_RADIUS,
-                    mCenterX,
-                    mCenterY - sHourHandLength,
-                    mHourPaint);
-
-            canvas.rotate(minutesRotation - hoursRotation, mCenterX, mCenterY);
-            canvas.drawLine(
-                    mCenterX,
-                    mCenterY - CENTER_GAP_AND_CIRCLE_RADIUS,
-                    mCenterX,
-                    mCenterY - sMinuteHandLength,
-                    mMinutePaint);
-
-            /*
-             * Ensure the "seconds" hand is drawn only when we are in interactive mode.
-             * Otherwise, we only update the watch face once a minute.
-             */
-            if (!mAmbient) {
-                canvas.rotate(secondsRotation - minutesRotation, mCenterX, mCenterY);
-                canvas.drawLine(
-                        mCenterX,
-                        mCenterY - CENTER_GAP_AND_CIRCLE_RADIUS,
-                        mCenterX,
-                        mCenterY - mSecondHandLength,
-                        mSecondPaint);
-
-            }
-            canvas.drawCircle(
-                    mCenterX,
-                    mCenterY,
-                    CENTER_GAP_AND_CIRCLE_RADIUS,
-                    mTickAndCirclePaint);
-
-            /* Restore the canvas' original orientation. */
-            canvas.restore();
-
-            /* Draw rectangle behind peek card in ambient mode to improve readability. */
-            if (mAmbient) {
-                canvas.drawRect(mPeekCardBounds, mBackgroundPaint);
-            }
         }
 
         @Override
