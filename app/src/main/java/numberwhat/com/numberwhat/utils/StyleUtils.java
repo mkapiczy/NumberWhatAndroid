@@ -29,17 +29,23 @@ public class  StyleUtils {
         return p;
     }
 
-    public static Paint getHourTextPaint(Context ctx,boolean alignLeft) {
+    public static Paint getHourTextPaint(Context ctx,boolean alignLeft, int minutes) {
         Paint p = new Paint();
         p.setAntiAlias(true);
         p.setFakeBoldText(true);
         p.setTextSize(120);
         if(alignLeft){
-            p.setColor(ContextCompat.getColor(ctx, R.color.colorHourText1));
             p.setTextAlign(Paint.Align.LEFT);
         }else{
-            p.setColor(ContextCompat.getColor(ctx, R.color.colorHourText2));
             p.setTextAlign(Paint.Align.RIGHT);
+        }
+
+        if(minutes < 30){
+            p.setColor(ContextCompat.getColor(ctx, R.color.colorHourText1));
+        }else if(minutes > 54){
+            p.setColor(ContextCompat.getColor(ctx, R.color.colorHourText1));
+        }else{
+            p.setColor(ContextCompat.getColor(ctx, R.color.colorHourText2));
         }
 
         p.setTypeface(Typeface.DEFAULT_BOLD);
