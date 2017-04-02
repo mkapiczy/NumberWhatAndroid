@@ -16,9 +16,7 @@
 
 package numberwhat.com.numberwhatwear;
 
-import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
