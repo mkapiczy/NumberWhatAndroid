@@ -5,5 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorDial">#4180D0</color>
     <color name="colorMinuteBoard">#95F6F2</color>
-    <color name="colorHourText">#000000</color>
+    <color name="colorHourText1">#545454</color>
+    <color name="colorHourText2">#F5F5F5</color>
 </resources>

@@ -17,7 +17,7 @@ public class RenderUtils {
     public static void updateClock(Context context) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.watch_widget_activity);
 
-        Bitmap bitmap = Bitmap.createBitmap(300, 300, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(600, 600, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
 
         int canvasWidth = canvas.getWidth();
@@ -32,13 +32,16 @@ public class RenderUtils {
 
         canvas.drawArc(new RectF(0, 0, canvasWidth, canvasHeight), -90, minutesInDegrees, true,
                 StyleUtils.getMinuteBoardPaint(context));
-        int hourMargin = canvasWidth / 15;
+        boolean alignLeft = false;
+        int hourMargin = canvasWidth / 30;
         int hourXPosition;
 
         if (minutes < 30) {
             hourXPosition = canvasWidth / 2 + hourMargin;
+            alignLeft = true;
         } else {
             hourXPosition = canvasWidth / 2 - hourMargin;
+            alignLeft = false;
             if (hour == 12) {
                 hour = 1;
             } else {
@@ -46,9 +49,9 @@ public class RenderUtils {
             }
         }
 
-        int hourYPosition = canvasHeight / 4 - canvasHeight / 8;
+        int hourYPosition = canvasHeight / 5 + canvasHeight / 25 ;
 
-        canvas.drawText(Integer.toString(hour), hourXPosition, hourYPosition, StyleUtils.getHourTextPaint(context));
+        canvas.drawText(Integer.toString(hour), hourXPosition, hourYPosition, StyleUtils.getHourTextPaint(context,alignLeft));
         views.setImageViewBitmap(R.id.imageView1, bitmap);
 
         ComponentName thiswidget = new ComponentName(context, WatchWidgetActivity.class);

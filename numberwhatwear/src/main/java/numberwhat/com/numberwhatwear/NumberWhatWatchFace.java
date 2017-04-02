@@ -370,13 +370,16 @@ public class NumberWhatWatchFace extends CanvasWatchFaceService {
 
             canvas.drawArc(new RectF(0, 0, canvasWidth, canvasHeight), -90, minutesInDegrees, true,
                     StyleUtils.getMinuteBoardPaint(getApplicationContext()));
-            int hourMargin = canvasWidth / 15;
+            boolean alignLeft = false;
+            int hourMargin = canvasWidth / 30;
             int hourXPosition;
 
             if (minutes < 30) {
                 hourXPosition = canvasWidth / 2 + hourMargin;
+                alignLeft = true;
             } else {
                 hourXPosition = canvasWidth / 2 - hourMargin;
+                alignLeft = false;
                 if (hour == 12) {
                     hour = 1;
                 } else {
@@ -384,9 +387,9 @@ public class NumberWhatWatchFace extends CanvasWatchFaceService {
                 }
             }
 
-            int hourYPosition = canvasHeight / 4 - canvasHeight / 8;
+            int hourYPosition = canvasHeight / 5 + canvasHeight / 25;
 
-            canvas.drawText(Integer.toString(hour), hourXPosition, hourYPosition, StyleUtils.getHourTextPaint(getApplicationContext()));
+            canvas.drawText(Integer.toString(hour), hourXPosition, hourYPosition, StyleUtils.getHourTextPaint(getApplicationContext(),alignLeft));
 
         }
 
