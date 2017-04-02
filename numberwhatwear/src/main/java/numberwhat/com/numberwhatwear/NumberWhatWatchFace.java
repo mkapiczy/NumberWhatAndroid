@@ -364,6 +364,10 @@ public class NumberWhatWatchFace extends CanvasWatchFaceService {
 
             int minutes = DateUtils.getCurrentMinutes();
             int hour = DateUtils.getCurrentHour();
+
+            if(hour == 0){
+                hour = 12;
+            }
             int minutesInDegrees = 6 * minutes;
 
             canvas.drawArc(new RectF(0, 0, canvasWidth, canvasHeight), -90, minutesInDegrees, true,
