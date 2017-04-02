@@ -2,11 +2,9 @@
     <string name="app_name">NumberWhat</string>
     <string name="appwidget_text">Example text</string>
     <string name="add_widget">Add widget</string>
+    <string name="heading">Number What</string>
     <string name="hello">
-    Hello\n\n
-    Thanks for installing the Custom Clock Widget.\n\n
-    You need to add the widget to your home screen to use it.
-    Long-press the home screen and select the widget from the
-    list of those installed on your device.
+    Thanks for downloading Number What Clock Widget.\n\n
+    Number What displays the time in a unique way that makes it easyer for people with discalculia to tell the time
 </string>
 </resources>

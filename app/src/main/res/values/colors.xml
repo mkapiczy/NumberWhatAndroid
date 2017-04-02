@@ -7,5 +7,7 @@
     <color name="colorMinuteBoard">#95F6F2</color>
     <color name="colorHourText1">#545454</color>
     <color name="colorHourText2">#F5F5F5</color>
+    <color name="background">#ddefef</color>
+    <color name="text">#545454</color>
 
 </resources>
