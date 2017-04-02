@@ -387,7 +387,7 @@ public class NumberWhatWatchFace extends CanvasWatchFaceService {
 
             int hourYPosition = canvasHeight / 5 + canvasHeight / 25;
 
-            canvas.drawText(Integer.toString(hour), hourXPosition, hourYPosition, StyleUtils.getHourTextPaint(getApplicationContext(),alignLeft));
+            canvas.drawText(Integer.toString(hour), hourXPosition, hourYPosition, StyleUtils.getHourTextPaint(getApplicationContext(),alignLeft,minutes));
 
         }
 

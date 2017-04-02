@@ -51,7 +51,7 @@ public class RenderUtils {
 
         int hourYPosition = canvasHeight / 5 + canvasHeight / 25 ;
 
-        canvas.drawText(Integer.toString(hour), hourXPosition, hourYPosition, StyleUtils.getHourTextPaint(context,alignLeft));
+        canvas.drawText(Integer.toString(hour), hourXPosition, hourYPosition, StyleUtils.getHourTextPaint(context,alignLeft,minutes));
         views.setImageViewBitmap(R.id.imageView1, bitmap);
 
         ComponentName thiswidget = new ComponentName(context, WatchWidgetActivity.class);
