@@ -18,7 +18,7 @@ The clock is shaped like a pie chart with two colors, a background color and fro
 
 The projects has been realised for three different platforms:<br>
 
-Pebble Watch - with use of pebble-cloud sdk - Javascript - Rocky.js library<br>
+Pebble Watch - with use of pebble-cloud sdk - Javascript - Rocky.js library - <a href="https://github.com/neobonde/NumberWhatPebble">Repository</a><br> 
 Android Widget - native java application with use of Android Studio<br>
 Android wear watchface - native java application with use of Android Studio<br><br>
 
